@@ -29,6 +29,7 @@ import org.gradle.invocation.DefaultGradle
 class SensorsAnalyticsPlugin implements Plugin<Project> {
     @Override
     void apply(Project project) {
+        //创建内部Extension需要
         Instantiator ins = ((DefaultGradle) project.getGradle()).getServices().get(
                 Instantiator)
         def args = [ins] as Object[]

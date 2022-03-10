@@ -37,7 +37,9 @@ class SensorsAnalyticsTransformHelper {
     }
 
     void onTransform() {
+        //打印扩展详情
         println("sensorsAnalytics {\n"+extension+"\n}")
+        //添加扩展中设置的include和exclude
         ArrayList<String> excludePackages = extension.exclude
         if (excludePackages != null) {
             exclude.addAll(excludePackages)
@@ -46,16 +48,22 @@ class SensorsAnalyticsTransformHelper {
         if (includePackages != null) {
             include.addAll(includePackages)
         }
+
         createSensorsAnalyticsHookConfig()
     }
 
+    /**
+     * 根据SensorsAnalyticsSDKExtension在Gradle中设置的属性调用Config方法
+     */
     private void createSensorsAnalyticsHookConfig() {
         sensorsAnalyticsHookConfig = new SensorsAnalyticsSDKHookConfig()
+        //遍历SensorsAnalyticsSDKExtension的属性
         List<MetaProperty> metaProperties = SensorsAnalyticsSDKExtension.getMetaClass().properties
         for (it in metaProperties) {
             if (it.name == 'class') {
                 continue
             }
+            //根据设置同步调用Config里的方法
             if (extension.sdk."${it.name}") {
                 sensorsAnalyticsHookConfig."${it.name}"(it.name)
             }
