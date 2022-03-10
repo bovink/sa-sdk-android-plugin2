@@ -23,19 +23,24 @@ import org.gradle.api.Project
 import org.gradle.internal.reflect.Instantiator
 import org.gradle.invocation.DefaultGradle
 
+/**
+ * 插件类
+ */
 class SensorsAnalyticsPlugin implements Plugin<Project> {
     @Override
     void apply(Project project) {
         Instantiator ins = ((DefaultGradle) project.getGradle()).getServices().get(
                 Instantiator)
         def args = [ins] as Object[]
+        //创建extension
         SensorsAnalyticsExtension extension = project.extensions.create("sensorsAnalytics", SensorsAnalyticsExtension,args)
 
-        boolean disableSensorsAnalyticsPlugin = false
+        boolean disableSensorsAnalyticsPlugin = false//是否关闭神策分析插件
         boolean disableSensorsAnalyticsPluginNew = false
         boolean disableSensorsAnalyticsMultiThread = false
         boolean disableSensorsAnalyticsIncremental = false
         Properties properties = new Properties()
+        //读取gradle设置
         if (project.rootProject.file('gradle.properties').exists()) {
             properties.load(project.rootProject.file('gradle.properties').newDataInputStream())
             disableSensorsAnalyticsPlugin = Boolean.parseBoolean(properties.getProperty("disableSensorsAnalyticsPlugin", "false"))
@@ -45,9 +50,11 @@ class SensorsAnalyticsPlugin implements Plugin<Project> {
         }
         if (!disableSensorsAnalyticsPlugin && !disableSensorsAnalyticsPluginNew) {
             AppExtension appExtension = project.extensions.findByType(AppExtension.class)
+            //Transform帮助类
             SensorsAnalyticsTransformHelper transformHelper = new SensorsAnalyticsTransformHelper(extension)
             transformHelper.disableSensorsAnalyticsIncremental = disableSensorsAnalyticsIncremental
             transformHelper.disableSensorsAnalyticsMultiThread = disableSensorsAnalyticsMultiThread
+            //注册Transform
             appExtension.registerTransform(new SensorsAnalyticsTransform(transformHelper))
 
             project.afterEvaluate {

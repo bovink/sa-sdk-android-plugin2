@@ -21,6 +21,10 @@ import org.gradle.api.Action
 import org.gradle.internal.reflect.Instantiator
 
 
+/**
+ * 神策分析扩展
+ * 相关变量可以在gradle中设置
+ */
 class SensorsAnalyticsExtension {
     boolean debug = false
     boolean disableJar = false

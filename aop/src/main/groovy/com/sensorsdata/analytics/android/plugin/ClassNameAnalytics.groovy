@@ -21,6 +21,7 @@ class ClassNameAnalytics {
 
     public String className
 
+    //是否需要字节码插桩处理
     boolean isShouldModify = false
 
     boolean isSensorsDataAPI = false
@@ -33,11 +34,16 @@ class ClassNameAnalytics {
 
     ClassNameAnalytics (String className) {
         this.className = className
+        //判断类是否是SensorsDataAPI
         isSensorsDataAPI = (className == 'com.sensorsdata.analytics.android.sdk.SensorsDataAPI')
         isSensorsDataUtils = (className == 'com.sensorsdata.analytics.android.sdk.util.SensorsDataUtils')
         isSALog = (className == 'com.sensorsdata.analytics.android.sdk.SALog')
     }
 
+    /**
+     * 是否是SDK中的文件
+     * @return
+     */
     boolean isSDKFile() {
         return isSALog || isSensorsDataAPI || isSensorsDataUtils
     }
@@ -46,6 +52,10 @@ class ClassNameAnalytics {
         return className.startsWith("android.support.v17.leanback") || className.startsWith("androidx.leanback")
     }
 
+    /**
+     * Android自动生成的类
+     * @return
+     */
     boolean isAndroidGenerated() {
         return className.contains('R$') ||
                 className.contains('R2$') ||

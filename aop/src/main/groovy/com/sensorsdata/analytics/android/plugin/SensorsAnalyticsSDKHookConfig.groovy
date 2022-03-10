@@ -25,7 +25,13 @@ class SensorsAnalyticsSDKHookConfig {
 
     HashMap<String,HashMap<String,ArrayList<SensorsAnalyticsMethodCell>>> methodCells = new HashMap<>()
 
+    /**
+     * 禁用IMEI
+     *
+     * @param methodName
+     */
     void disableIMEI(String methodName) {
+        //将SDK方法与插件方法绑定
         def imei = new SensorsAnalyticsMethodCell('getIMEI','(Landroid/content/Context;)Ljava/lang/String;','createGetIMEI')
         def imeiMethods = [imei]
         def imeiMethodCells = new HashMap<String,ArrayList<SensorsAnalyticsMethodCell>>()
@@ -33,6 +39,11 @@ class SensorsAnalyticsSDKHookConfig {
         methodCells.put(methodName,imeiMethodCells)
     }
 
+    /**
+     * 禁用AndroidId
+     *
+     * @param methodName
+     */
     void disableAndroidID(String methodName) {
         def androidID = new SensorsAnalyticsMethodCell('getAndroidID','(Landroid/content/Context;)Ljava/lang/String;','createGetAndroidID')
         def androidIDMethods = [androidID]
@@ -41,6 +52,11 @@ class SensorsAnalyticsSDKHookConfig {
         methodCells.put(methodName,androidIdMethodCells)
     }
 
+    /**
+     * 禁用Log
+     *
+     * @param methodName
+     */
     void disableLog(String methodName) {
         def info = new SensorsAnalyticsMethodCell('info','(Ljava/lang/String;Ljava/lang/String;Ljava/lang/Throwable;)V',"createSALogInfo")
         def printStackTrace = new SensorsAnalyticsMethodCell('printStackTrace','(Ljava/lang/Exception;)V',"createPrintStackTrack")
@@ -79,6 +95,7 @@ class SensorsAnalyticsSDKHookConfig {
     //todo 扩展
 
     void createGetIMEI(ClassVisitor classVisitor, SensorsAnalyticsMethodCell methodCell) {
+        //字节码插桩让方法放回
         def mv = classVisitor.visitMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, methodCell.name, methodCell.desc, null, null)
         mv.visitCode()
         mv.visitLdcInsn("")

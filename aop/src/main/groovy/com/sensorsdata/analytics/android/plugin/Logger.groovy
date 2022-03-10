@@ -20,6 +20,10 @@ package com.sensorsdata.analytics.android.plugin
 import java.lang.reflect.Array
 
 class Logger {
+    /**
+     * 是否处于debug模式，
+     * 开启时可以打印日志
+     */
     private static boolean debug = false
     public static HashMap<Integer, String> accCodeMap = new HashMap<>()
     public static HashMap<Integer, String> opCodeMap = new HashMap<>()

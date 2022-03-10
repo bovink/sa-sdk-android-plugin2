@@ -62,6 +62,11 @@ class SensorsAnalyticsTransformHelper {
         }
     }
 
+    /**
+     * 根据类名进行分析
+     * @param className
+     * @return
+     */
     ClassNameAnalytics analytics(String className) {
 
         ClassNameAnalytics classNameAnalytics = new ClassNameAnalytics(className)

@@ -17,6 +17,9 @@
 
 package com.sensorsdata.analytics.android.plugin
 
+/**
+ * 设置是否禁用相关方法
+ */
 class SensorsAnalyticsSDKExtension {
     // 同SensorsAnalyticsSDKHookConfig中方法对应, disableIMEI,disableLog,disableJsInterface，disableAndroidID
     boolean disableIMEI = false

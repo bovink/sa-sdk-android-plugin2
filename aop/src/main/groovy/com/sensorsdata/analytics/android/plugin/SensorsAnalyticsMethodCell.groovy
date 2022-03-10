@@ -17,6 +17,9 @@
 
 package com.sensorsdata.analytics.android.plugin
 
+/**
+ * 方法单元Bean
+ */
 class SensorsAnalyticsMethodCell {
     // 原方法名
     String name
