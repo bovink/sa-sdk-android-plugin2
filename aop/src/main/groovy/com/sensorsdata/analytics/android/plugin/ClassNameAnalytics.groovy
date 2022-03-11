@@ -30,6 +30,9 @@ class ClassNameAnalytics {
 
     boolean isSALog = false
 
+    /**
+     * 当前类需要禁用的列表
+     */
     def methodCells = new ArrayList<SensorsAnalyticsMethodCell>()
 
     ClassNameAnalytics (String className) {

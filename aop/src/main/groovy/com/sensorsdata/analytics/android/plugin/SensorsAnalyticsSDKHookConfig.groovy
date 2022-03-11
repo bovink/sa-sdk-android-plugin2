@@ -23,6 +23,9 @@ import org.objectweb.asm.Opcodes
 
 class SensorsAnalyticsSDKHookConfig {
 
+    /**
+     * 设置的需要禁用的类的方法列表
+     */
     HashMap<String,HashMap<String,ArrayList<SensorsAnalyticsMethodCell>>> methodCells = new HashMap<>()
 
     /**

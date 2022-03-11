@@ -35,6 +35,9 @@ class SensorsAnalyticsClassVisitor extends ClassVisitor {
 
     private ClassNameAnalytics classNameAnalytics
 
+    /**
+     * 当前类需要被禁用的方法
+     */
     private ArrayList<SensorsAnalyticsMethodCell> methodCells = new ArrayList<>()
 
     private int version
@@ -116,6 +119,7 @@ class SensorsAnalyticsClassVisitor extends ClassVisitor {
         }
 
         for (cell in methodCells) {
+            //调用Config中的方法对原方法进行字节码插桩来禁用原方法
             transformHelper.sensorsAnalyticsHookConfig."${cell.agentName}"(classVisitor, cell)
         }
 
