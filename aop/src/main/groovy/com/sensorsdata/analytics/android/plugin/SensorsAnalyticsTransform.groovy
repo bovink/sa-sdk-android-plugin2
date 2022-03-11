@@ -73,6 +73,7 @@ class SensorsAnalyticsTransform extends Transform {
 
     @Override
     boolean isIncremental() {
+        //由变量决定
         return !transformHelper.disableSensorsAnalyticsIncremental
     }
 
@@ -115,6 +116,7 @@ class SensorsAnalyticsTransform extends Transform {
              */
             input.jarInputs.each { JarInput jarInput ->
                 if (waitableExecutor) {
+                    //多线程遍历jar
                     waitableExecutor.execute(new Callable<Object>() {
                         @Override
                         Object call() throws Exception {
@@ -176,6 +178,7 @@ class SensorsAnalyticsTransform extends Transform {
 
                     }
                 } else {
+                    //先复制目录到路径
                     FileUtils.copyDirectory(dir, dest)
                     dir.traverse(type: FileType.FILES, nameFilter: ~/.*\.class/) {
                         File inputFile ->
@@ -203,8 +206,10 @@ class SensorsAnalyticsTransform extends Transform {
     }
 
     void forEachDir(File dir , File inputFile, Context context ,String srcDirPath, String destDirPath) {
+        //修改文件
         File modified = modifyClassFile(dir, inputFile, context.getTemporaryDir())
         if (modified != null) {
+            //原文件
             File target = new File(inputFile.absolutePath.replace(srcDirPath, destDirPath))
             if (target.exists()) {
                 target.delete()

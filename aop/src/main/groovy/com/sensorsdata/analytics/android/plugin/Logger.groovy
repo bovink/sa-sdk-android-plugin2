@@ -39,6 +39,11 @@ class Logger {
         return debug
     }
 
+    /**
+     * 打印错误信息
+     * @param msg
+     * @return
+     */
     def static error(Object msg) {
         try {
             println("\033[40;31m" + "[SensorsAnalytics]: ${msg}" + "\033[0m")

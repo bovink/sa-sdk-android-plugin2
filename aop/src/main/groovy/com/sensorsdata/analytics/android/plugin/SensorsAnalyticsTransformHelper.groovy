@@ -36,6 +36,10 @@ class SensorsAnalyticsTransformHelper {
         this.extension = extension
     }
 
+    /**
+     * helper添加exclude类和include类
+     * 设置钩子配置
+     */
     void onTransform() {
         //打印扩展详情
         println("sensorsAnalytics {\n"+extension+"\n}")
