@@ -180,6 +180,7 @@ class SensorsAnalyticsTransform extends Transform {
                 } else {
                     //先复制目录到路径
                     FileUtils.copyDirectory(dir, dest)
+                    //遍历class文件
                     dir.traverse(type: FileType.FILES, nameFilter: ~/.*\.class/) {
                         File inputFile ->
                             if (waitableExecutor) {
@@ -208,13 +209,17 @@ class SensorsAnalyticsTransform extends Transform {
     void forEachDir(File dir , File inputFile, Context context ,String srcDirPath, String destDirPath) {
         //修改文件
         File modified = modifyClassFile(dir, inputFile, context.getTemporaryDir())
+        //判断是否修改了Class文件
         if (modified != null) {
-            //原文件
+            //找到原文件
             File target = new File(inputFile.absolutePath.replace(srcDirPath, destDirPath))
+            //如果原文件存在则删除
             if (target.exists()) {
                 target.delete()
             }
+            //复制修改过的文件
             FileUtils.copyFile(modified, target)
+            //删除被覆盖的文件
             modified.delete()
         }
     }
