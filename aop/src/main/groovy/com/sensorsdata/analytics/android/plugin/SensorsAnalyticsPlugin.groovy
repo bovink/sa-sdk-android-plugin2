@@ -44,6 +44,7 @@ class SensorsAnalyticsPlugin implements Plugin<Project> {
         //读取gradle设置
         if (project.rootProject.file('gradle.properties').exists()) {
             properties.load(project.rootProject.file('gradle.properties').newDataInputStream())
+            //此处的开关是控制编译时是否编译插件内容
             disableSensorsAnalyticsPlugin = Boolean.parseBoolean(properties.getProperty("disableSensorsAnalyticsPlugin", "false"))
             disableSensorsAnalyticsPluginNew = Boolean.parseBoolean(properties.getProperty("sensorsAnalytics.disablePlugin", "false"))
             disableSensorsAnalyticsMultiThread = Boolean.parseBoolean(properties.getProperty("sensorsAnalytics.disableMultiThread", "false"))
